@@ -84,6 +84,15 @@ type renderInternalOptions struct {
 	DeleteAfter     *string     `json:"deleteAfter"`
 }
 
+type ErrorResponse struct {
+	Type    string `json:"type"`
+	Message string `json:"message"`
+}
+
+func (r ErrorResponse) Error() string {
+	return r.Message
+}
+
 type RemotionRenderResponse struct {
 	BucketName string `json:"bucketName"`
 	RenderId   string `json:"renderId"`
