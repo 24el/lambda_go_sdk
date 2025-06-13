@@ -32,8 +32,8 @@ type RemotionOptions struct {
 	ForcePathStyle                 bool                   `json:"forcePathStyle"`
 	AudioBitrate                   interface{}            `json:"audioBitrate"`
 	VideoBitrate                   interface{}            `json:"videoBitrate"`
-	EncodingBufferSize             interface{}            `json:"encodingBufferSize"`
-	EncodingMaxRate                interface{}            `json:"encodingMaxRate"`
+	BufferSize                     interface{}            `json:"bufferSize"`
+	MaxRate                        interface{}            `json:"maxRate"`
 	Webhook                        interface{}            `json:"webhook"`
 	ForceHeight                    interface{}            `json:"forceHeight"`
 	OffthreadVideoCacheSizeInBytes interface{}            `json:"offthreadVideoCacheSizeInBytes"`
@@ -47,6 +47,8 @@ type RemotionOptions struct {
 	Gl                             string                 `json:"gl"`
 	X264Preset                     interface{}            `json:"x264Preset"`
 	DeleteAfter                    *string                `json:"deleteAfter"`
+	FramesPerLambda                int                    `json:"framesPerLambda"`
+	ProResProfile                  string                 `json:"proResProfile"`
 }
 
 type renderInternalOptions struct {
@@ -84,8 +86,8 @@ type renderInternalOptions struct {
 	Overwrite                      bool                   `json:"overwrite"`
 	AudioBitrate                   interface{}            `json:"audioBitrate"`
 	VideoBitrate                   interface{}            `json:"videoBitrate"`
-	EncodingBufferSize             interface{}            `json:"encodingBufferSize"`
-	EncodingMaxRate                interface{}            `json:"encodingMaxRate"`
+	BufferSize                     interface{}            `json:"bufferSize"`
+	MaxRate                        interface{}            `json:"maxRate"`
 	Webhook                        interface{}            `json:"webhook"`
 	OffthreadVideoCacheSizeInBytes interface{}            `json:"offthreadVideoCacheSizeInBytes"`
 	OffthreadVideoThreads          interface{}            `json:"offthreadVideoThreads"`

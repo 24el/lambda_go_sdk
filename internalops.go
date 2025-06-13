@@ -2,6 +2,7 @@ package lambda_go_sdk
 
 import (
 	"log"
+	"strconv"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -100,6 +101,13 @@ func constructRenderInternals(options *RemotionOptions) (*renderInternalOptions,
 		internalParams.Scale = options.Scale
 	}
 
+	if options.BufferSize != nil {
+		internalParams.BufferSize = options.BufferSize
+	}
+	if options.MaxRate != nil {
+		internalParams.MaxRate = options.MaxRate
+	}
+
 	if options.Codec == "" {
 		internalParams.Codec = "h264"
 	} else {
@@ -122,6 +130,15 @@ func constructRenderInternals(options *RemotionOptions) (*renderInternalOptions,
 		internalParams.ConcurrencyPerLambda = 1
 	} else {
 		internalParams.ConcurrencyPerLambda = options.ConcurrencyPerLambda
+	}
+
+	if options.FramesPerLambda != 0 {
+		framesPerLambda := strconv.Itoa(options.FramesPerLambda)
+		internalParams.FramesPerLambda = &framesPerLambda
+	}
+
+	if options.ProResProfile != "" {
+		internalParams.ProResProfile = options.ProResProfile
 	}
 
 	if options.TimeoutInMilliseconds == 0 {
