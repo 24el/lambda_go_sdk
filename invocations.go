@@ -38,9 +38,12 @@ func invokeRenderLambda(options RemotionOptions) (*RemotionRenderResponse, error
 
 	// Invoke Lambda function
 	invocationResult, invocationError := svc.Invoke(invocationPayload)
-
 	if invocationError != nil {
 		return nil, invocationError
+	}
+
+	if err := tryUnmarshalErrorPayload(invocationResult.Payload); err != nil {
+		return nil, err
 	}
 
 	// Unmarshal response from Lambda function
@@ -85,9 +88,12 @@ func invokeRenderProgressLambda(config RenderConfig) (*RenderProgress, error) {
 
 	// Invoke Lambda function
 	invokeResult, invokeError := svc.Invoke(invocationParams)
-
 	if invokeError != nil {
 		return nil, invokeError
+	}
+
+	if err := tryUnmarshalErrorPayload(invokeResult.Payload); err != nil {
+		return nil, err
 	}
 
 	// Unmarshal response from Lambda function
@@ -99,4 +105,17 @@ func invokeRenderProgressLambda(config RenderConfig) (*RenderProgress, error) {
 	}
 
 	return &renderProgressOutput, nil
+}
+
+func tryUnmarshalErrorPayload(payload []byte) error {
+	var errResp ErrorResponse
+	if err := json.Unmarshal(payload, &errResp); err != nil {
+		return err
+	}
+
+	if errResp.Type == "error" {
+		return errResp
+	}
+
+	return nil
 }
